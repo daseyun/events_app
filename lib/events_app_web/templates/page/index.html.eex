@@ -3,13 +3,18 @@
     <h1>Events Feed</h1>
   </div>
 </div>
-
+<div class="row">
+  <div class="col-12">
+    <%= if @conn.assigns[:current_user] do %>
+      <%= link "New Event +", to: Routes.event_path(@conn, :new), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+</br>
 <div class="row">
   <%= for event <- @events do %>
     <div class="col-sm-4 card">
-      <!--
-        <img class="card-img-top" src="" alt="">
-      -->
+
       <div class="card-body">
         <p class="card-text">
           Event: <%= event.event_name %>

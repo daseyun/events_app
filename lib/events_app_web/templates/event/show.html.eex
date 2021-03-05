@@ -1,46 +1,43 @@
 <h1>Show Event</h1>
-
 <ul>
-
   <li>
     <strong>Event name:</strong>
     <%= @event.event_name %>
   </li>
-
   <li>
     <strong>Date:</strong>
     <%= @event.date %>
   </li>
-
   <li>
+    <strong>Event owner:</strong>
+    <%= @event.user.name %>
+  </li>
+  <li class="wrap-text">
     <strong>Description:</strong>
     <%= @event.description %>
   </li>
-
-  <li>
-    <strong>Event owner:</strong>
-    <%= @event.user_id %>
-  </li>
-
 </ul>
-
-<table>
-
-<tr>
-
-<th> user </th>
-<th> status </th>
-
-</tr>
-<%= for inv <- @event.invitees do %>
-<tr>
-<td> <%= inv.user.name %> </td>
-<td> <%= inv.event_status %> </td>
-</tr>
-<% end %>
+<br />
+<h2>Invitees Status</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"> user </th>
+      <th scope="col"> status </th>
+    </thead>
+  </tr>
+  <%= for inv <- @event.invitees do %>
+    <tr>
+      <td> <%= inv.user.name %> </td>
+      <td> <%= inv.event_status %> </td>
+    </tr>
+  <% end %>
 </table>
-
-
-
 <span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
 <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
+<span>
+  <%# <%= link "Invite To This Event", to: Routes.invitee_path(@conn, :new, param: @event.id) %>
+</span>
+<span>
+  <%# <%= link "[EDIT INVITEE]", to: Routes.invitee_path(@conn, :edit, @event) %>
+</span>

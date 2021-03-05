@@ -4,31 +4,33 @@
     <p>Oops, something went wrong! Please check the errors below.</p>
   </div>
 <% end %>
-<div class="form-group">
-  <%= label f, :event_name %>
-  <%= text_input f, :event_name, class: "form-control" %>
-  <%= error_tag f, :event_name %>
-</div>
-<div class="form-group">
-  <%= label f, :date %>
-  <%= datetime_select f, :date, class: "form-control date" %>
-  <%= error_tag f, :date %>
-</div>
-<div class="form-group">
-  <%= label f, :description %>
-  <%= text_input f, :description, class: "form-control" %>
-  <%= error_tag f, :description %>
-</div>
-
-<div class="form-group">
-  <%= label f, :invitees %>
-
-  <%= error_tag f, :invitees %>
-</div>
-
-
-
-<div>
-  <%= submit "Save", class: "btn btn-primary"%>
-</div>
+<%= if @current_user  do %>
+  <div class="form-group">
+    <%= label f, :event_name %>
+    <%= text_input f, :event_name, class: "form-control" %>
+    <%= error_tag f, :event_name %>
+  </div>
+  <div class="form-group">
+    <%= label f, :date %>
+    <%= text_input f, :date, id: "datetime", class: "form-control date", placeholder: "Click to select date..." %>
+    <%= error_tag f, :date %>
+  </div>
+  <div class="form-group">
+    <%= label f, :description %>
+    <%= text_input f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
+  <div>
+    <%= submit "Save", class: "btn btn-primary"%>
+  </div>
+<% else %>
+  <div class="alert alert-danger">
+    <p>Please log in to make an event.</p>
+  </div>
+<% end %>
+<script>
+  flatpickr("#datetime", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i"});
+</script>
 <% end %>

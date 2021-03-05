@@ -1,7 +1,7 @@
 /* This file is for your main application css. */
 // @import "./phoenix.css";
 @import "bootstrap";
-
+@import "flatpickr";
 // /* Alerts and form errors */
 // .alert {
 //   padding: 15px;
@@ -35,3 +35,22 @@
   display: block;
   margin: -1rem 0 2rem;
 }
+
+//https://stackoverflow.com/questions/6666532/how-to-force-table-cell-td-content-to-wrap
+// td {
+//   word-wrap: break-word;
+// }
+table {
+  table-layout: fixed;
+}
+
+.wrap-text {
+  word-wrap: break-word;
+}
+// .action-buttons {
+//   display: table-cell;
+//   width: 300px;
+//   min-width: 300px;
+// }
+
+// custom

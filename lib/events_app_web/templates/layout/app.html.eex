@@ -7,33 +7,41 @@
     <title>EventsApp</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/flatpickr.js") %>"></script>
   </head>
   <body>
     <div role="main" class="container">
-      <div class="row">
-        <div class="col my-2">
-          <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-            <p><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-          <% end %>
-        </div>
-        <%= if @conn.assigns[:current_user] do %>
-          <div class="col">
-            User: <%= @current_user.name %> |
-            <%= link("Logout", to: Routes.session_path(@conn, :delete),
+      <nav class="navbar navbar-expand-sm">
+        <span class="navbar-brand"><%= link "Home", to: Routes.page_path(@conn, :index) %></span>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item nav-link">
+            <%= link "Events", to: Routes.event_path(@conn, :index) %>
+          </li>
+          <li class="nav-item nav-link">
+            <%= link "Users", to: Routes.user_path(@conn, :index) %>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <%= if @conn.assigns[:current_user] do %>
+            <li class="nav-item">
+              User: <%= @current_user.name %> | <%= link("Logout", to: Routes.session_path(@conn, :delete),
               method: :delete) %>
-          </div>
-        <% else %>
-          <div class="col">
-            <%= form_for @conn, Routes.session_path(@conn, :create),
+            </li>
+          <% else %>
+            <span class="nav-item my-2">
+              <%= form_for @conn, Routes.session_path(@conn, :create),
             [class: "form-inline"], fn f -> %>
-            <%= text_input f, :name, class: "form-control" %>
-            <%= submit "Login", class: "btn btn-secondary" %>
-          <% end %>
-        </div>
-        <div class="col my-2">
-          <p><%= link "Register", to: Routes.user_path(@conn, :new) %></p>
-        </div>
-      <% end %>
+              <%= email_input f, :email, class: "form-control", placeholder: "email" %>
+              <%= submit "Login", class: "btn btn-secondary" %>
+            <% end %>
+          </span>
+          <a class="nav-item nav-link">
+            <p><%= link "Register", to: Routes.user_path(@conn, :new) %></p>
+          </a>
+        <% end %>
+      </ul>
+    </nav>
+    <div class="row">
       <%= if get_flash(@conn, :info) do %>
         <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <% end %>
@@ -41,8 +49,7 @@
         <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <% end %>
     </div>
+    <br/>
     <%= @inner_content %>
-
-
   </body>
 </html>

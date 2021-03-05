@@ -43,6 +43,10 @@ defmodule EventsApp.Users do
     Repo.get_by(User, name: name)
   end
 
+  def get_user_by_email(email) do
+    Repo.get_by(User, email: email)
+  end
+
   @doc """
   Creates a user.
 
@@ -56,9 +60,26 @@ defmodule EventsApp.Users do
 
   """
   def create_user(attrs \\ %{}) do
+    # IO.inspect(:xxxxxxxxxx)
+    # userExists? = get_user_by_email(attrs["email"])
+    # IO.inspect([:createuser, userExists?])
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
+    # cond do
+    #   userExists? == nil ->
+    #     changeset
+    #     |> Repo.insert()
+    #   true ->
+    #     # changeset = %User{}
+    #     # |> User.changeset(attrs)
+    #     changeset = %{changeset | action: :insert}
+    #     IO.inspect([:createuser, changeset])
+
+    #     {:error, changeset}
+    # end
+
+
   end
 
   @doc """

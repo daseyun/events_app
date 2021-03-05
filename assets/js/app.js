@@ -2,6 +2,8 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import "../css/app.scss"
+
+
 // import jQuery from 'jquery';
 // window.jQuery = window.$ = jQuery; // Bootstrap requires a global "$" object.
 import "bootstrap";
@@ -14,4 +16,14 @@ import "bootstrap";
 //     import {Socket} from "phoenix"
 //     import socket from "./socket"
 //
+// import "../node_modules/jquery/dist/jquery.min.js";
+// import "../node_modules/moment/min/moment.min.js";
+// import "../node_modules/daterangepicker/daterangepicker.js";
+import "jquery";
+import "moment";
+
+
+
+
+
 import "phoenix_html"

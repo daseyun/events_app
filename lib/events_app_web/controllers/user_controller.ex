@@ -15,6 +15,7 @@ defmodule EventsAppWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    # IO.inspect([:first, Users.create_user(user_params)])
     case Users.create_user(user_params) do
       {:ok, user} ->
         conn
@@ -22,7 +23,10 @@ defmodule EventsAppWeb.UserController do
         |> redirect(to: Routes.user_path(conn, :show, user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:info, "Unable to create account. Email may be registered already.")
+        # |> render(conn, "new.html", changeset: changeset)
+        |> redirect(to: Routes.user_path(conn, :new))
     end
   end
 

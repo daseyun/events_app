@@ -15,6 +15,7 @@ defmodule EventsAppWeb.EventController do
   end
 
   def create(conn, %{"event" => event_params}) do
+    IO.inspect([:event_params, event_params])
     event_params = event_params
     |> Map.put("user_id", conn.assigns[:current_user].id)
 

@@ -1,15 +1,25 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label f, :event_status %>
-  <%= text_input f, :event_status %>
-  <%= error_tag f, :event_status %>
-
-  <div>
-    <%= submit "Save" %>
+<%= if @changeset.action do %>
+  <div class="alert alert-danger">
+    <p>Oops, something went wrong! Please check the errors below.</p>
   </div>
+<% end %>
+<div class="form-group">
+  <%= label f, :user_email %>
+  <%= text_input f, :user_email, class: "form-control" %>
+  <%= error_tag f, :user_email %>
+</div>
+<div class="form-group">
+  <%= label f, :event_id %>
+  <%= text_input f, :event_id, class: "form-control" %>
+  <%= error_tag f, :event_id %>
+</div>
+<div class="form-group">
+  <%= label f, :event_status %>
+  <%=  select f, :event_status, ["no_response": "no_response", "yes": "yes", "maybe": "maybe", "no": "no" ], class: "form-control"%>
+  <%= error_tag f, :event_status %>
+</div>
+<div>
+  <%= submit "Save",  class: "btn btn-primary" %>
+</div>
 <% end %>
