@@ -29,6 +29,7 @@
   </div>
 <% end %>
 <script>
+// https://flatpickr.js.org/examples/
   flatpickr("#datetime", {
     enableTime: true,
     dateFormat: "Y-m-d H:i"});

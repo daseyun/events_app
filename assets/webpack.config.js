@@ -16,6 +16,7 @@ module.exports = (env, options) => {
         new OptimizeCSSAssetsPlugin({})
       ]
     },
+    // https://webpack.js.org/concepts/entry-points/#entrydescription-object
     entry: {
       'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js']),
       'flatpickr': './js/flatpickr.js'
