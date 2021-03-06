@@ -9,7 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-
+# https://github.com/NatTuck/scratch-2021-01/blob/master/notes-4550/11-photoblog/notes.md#add-user_id-to-post
 alias EventsApp.Repo
 alias EventsApp.Users.User
 alias EventsApp.Events.Event

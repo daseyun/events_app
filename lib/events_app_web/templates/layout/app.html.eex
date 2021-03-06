@@ -7,7 +7,6 @@
     <title>EventsApp</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/flatpickr.js") %>"></script>
   </head>
   <body>
     <div role="main" class="container">
@@ -28,6 +27,7 @@
               method: :delete) %>
             </li>
           <% else %>
+          <%# https://github.com/NatTuck/scratch-2021-01/blob/master/notes-4550/11-photoblog/notes.md#branch-03-add-users %>
             <span class="nav-item my-2">
               <%= form_for @conn, Routes.session_path(@conn, :create),
             [class: "form-inline"], fn f -> %>

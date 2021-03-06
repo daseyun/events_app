@@ -22,7 +22,10 @@ import "bootstrap";
 import "jquery";
 import "moment";
 
-
+import flatpickr from 'flatpickr';
+flatpickr("#datetime", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i"});
 
 
 

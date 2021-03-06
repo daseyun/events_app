@@ -1,3 +1,4 @@
+# https://github.com/NatTuck/scratch-2021-01/blob/master/notes-4550/11-photoblog/notes.md#branch-03-add-users
 defmodule EventsAppWeb.SessionController do
   use EventsAppWeb, :controller
 

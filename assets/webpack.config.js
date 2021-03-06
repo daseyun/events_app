@@ -18,8 +18,7 @@ module.exports = (env, options) => {
     },
     // https://webpack.js.org/concepts/entry-points/#entrydescription-object
     entry: {
-      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js']),
-      'flatpickr': './js/flatpickr.js'
+      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
     },
     output: {
       filename: '[name].js',

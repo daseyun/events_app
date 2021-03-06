@@ -1,0 +1,18 @@
+[Unit]
+Description=hw07/08 events-app
+
+[Service]
+Type=simple
+User=u_events
+Group=u_events
+Restart=on-failure
+Environment=MIX_ENV=prod
+Environment=PORT=4803
+Environment=PROD=true
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/u_events/events_app
+ExecStart=/bin/bash /home/u_events/events_app/start.sh
+
+[Install]
+WantedBy=multi-user.target
