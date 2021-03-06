@@ -1,25 +1,40 @@
 #!/bin/bash
 
-# export SECRET_KEY_BASE=[redacted]
 export MIX_ENV=prod
+# Common port range for this is 4000-10,000
+# Valid port range for a user app to listen
+# on is something like 1025-32767
 export PORT=4803
-export NODEBIN=`pwd`/assets/node_modules/.bin
-export PATH="$PATH:$NODEBIN"
-
-echo "Building..."
-
-mix deps.get
+export SECRET_KEY_BASE=[redacted]
+export DATABASE_URL=ecto://u_events:[user_pass]@localhost/events_app_prod
+mix ecto.create
+mix deps.get --only prod
 mix compile
-(cd assets && npm install)
-(cd assets && webpack --mode production)
+
+CFGD=$(readlink -f ~/.config/events_app)
+
+if [ ! -d "$CFGD" ]; then
+    mkdir -p "$CFGD"
+fi
+
+if [ ! -e "$CFGD/base" ]; then
+    mix phx.gen.secret > "$CFGD/base"
+fi
+
+if [ ! -e "$CFGD/db_pass" ]; then
+    pwgen 12 1 > "$CFGD/db_pass"
+fi
+
+SECRET_KEY_BASE=$(cat "$CFGD/base")
+export SECRET_KEY_BASE
+
+DB_PASS=$(cat "$CFGD/db_pass")
+export DATABASE_URL=ecto://u_events:$DB_PASS@localhost/events_app_prod
+
+mix ecto.migrate
+
+npm install --prefix ./assets
+npm run deploy --prefix ./assets
 mix phx.digest
 
-echo "Generating release..."
 mix release
-
-#echo "Stopping old copy of app, if any..."
-#_build/prod/rel/practice/bin/practice stop || true
-
-echo "Starting app..."
-
-PROD=t ./start.sh
