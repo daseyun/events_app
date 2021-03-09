@@ -16,12 +16,13 @@ defmodule EventsAppWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-
     user_photo = user_params["photo"]
     {:ok, hash} = Photos.save_photo(user_photo)
 
-    user_params = user_params
-    |> Map.put("profile_photo", hash)
+    user_params =
+      user_params
+      |> Map.put("profile_photo", hash)
+
     IO.inspect([:userPhoto, user_params])
 
     case Users.create_user(user_params) do
@@ -53,12 +54,13 @@ defmodule EventsAppWeb.UserController do
     user = Users.get_user!(id)
     user_photo = user_params["profile_photo"]
 
-    user_params = if user_photo do
-      {:ok, hash} = Photos.save_photo(user_photo.filename, user_photo.path)
-      Map.put(user_params, "profile_photo", hash)
-    else
-      user_params
-    end
+    user_params =
+      if user_photo do
+        {:ok, hash} = Photos.save_photo(user_photo.filename, user_photo.path)
+        Map.put(user_params, "profile_photo", hash)
+      else
+        user_params
+      end
 
     case Users.update_user(user, user_params) do
       {:ok, user} ->
@@ -85,11 +87,18 @@ defmodule EventsAppWeb.UserController do
     user = Users.get_user!(id)
     IO.inspect([:PHOTO, user])
 
-    {:ok, _name, data} = Photos.load_photo(user.profile_photo)
-    conn
-    |> put_resp_content_type("image/jpeg")
-    |> send_resp(200, data)
+    if user.profile_photo do
+      {:ok, _name, data} = Photos.load_photo(user.profile_photo)
+
+      conn
+      |> put_resp_content_type("image/jpeg")
+      |> send_resp(200, data)
+    else
+      conn
+      |> send_resp(200, "")
+    end
   end
+
   # def delete(...) do
   #   # FIXME: Remove old image
   # end
