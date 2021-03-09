@@ -1,5 +1,9 @@
 <h1>Show User</h1>
+<div>
+  <img src="<%= Routes.user_path(@conn, :photo, @user) %>" alt="">
+    <img src="" alt="">
 
+</div>
 <ul>
 
   <li>

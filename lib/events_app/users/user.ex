@@ -5,6 +5,7 @@ defmodule EventsApp.Users.User do
   schema "users" do
     field :email, :string
     field :name, :string
+    field :profile_photo, :string
     has_many :events, EventsApp.Events.Event
     has_many :invitees, EventsApp.Invitees.Invitee
     timestamps()
@@ -13,7 +14,7 @@ defmodule EventsApp.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
+    |> cast(attrs, [:name, :email, :profile_photo])
     |> validate_required([:name, :email])
     |> unique_constraint(:email)
 

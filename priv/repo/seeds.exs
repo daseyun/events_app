@@ -15,8 +15,8 @@ alias EventsApp.Users.User
 alias EventsApp.Events.Event
 alias EventsApp.Invitees.Invitee
 
-alice = Repo.insert!(%User{name: "alice", email: "alice@mail.com"})
-bob = Repo.insert!(%User{name: "bob", email: "bob@mail.com"})
+alice = Repo.insert!(%User{name: "alice", email: "alice@mail.com", profile_photo: "x"})
+bob = Repo.insert!(%User{name: "bob", email: "bob@mail.com", profile_photo: ""})
 
 p1 = Repo.insert!(%Event{
   event_name: "Alice's event",
