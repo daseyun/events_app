@@ -9,7 +9,7 @@ defmodule EventsApp.Events.Event do
     belongs_to :user, EventsApp.Users.User
     # field :invitees, :map
     has_many :invitees, EventsApp.Invitees.Invitee
-
+    has_many :comments, EventsApp.Comments.Comment
 
     # embeds_one :invitees, StandardUrls, on_replace: :update do
     #   field(:yes, {:array,:integer))

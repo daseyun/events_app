@@ -33,7 +33,9 @@
     </tr>
   <% end %>
 </table>
-<span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+<%= if current_user_is?(@conn, @event.user_id) do %>
+   <span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+<% end %>
 <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
 <span>
   <%# <%= link "Invite To This Event", to: Routes.invitee_path(@conn, :new, param: @event.id) %>
@@ -41,3 +43,24 @@
 <span>
   <%# <%= link "[EDIT INVITEE]", to: Routes.invitee_path(@conn, :edit, @event) %>
 </span>
+<hr>
+<%# https://github.com/NatTuck/scratch-2021-01/blob/master/notes-4550/13-access-rules/notes.md#branch-06-comments %>
+<h2>Add Comment</h2>
+
+<%= if have_current_user?(@conn) do %>
+  <%= render(
+    EventsAppWeb.CommentView,
+    "form.html",
+    changeset: @new_comment,
+    action: Routes.comment_path(@conn, :create)
+  ) %>
+<% end %>
+<hr>
+<%= for comm <- @event.comments do %>
+  <div class="card">
+    <div class="card-body">
+      <p>Posted by <%= comm.user.name %></p>
+      <p class="card-text"><%= comm.body %></p>
+    </div>
+  </div>
+<% end %>

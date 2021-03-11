@@ -17,8 +17,10 @@
 
       <td>
         <span><%= link "Show", to: Routes.user_path(@conn, :show, user), class: "btn btn-secondary" %></span>
+        <%= if current_user_is?(@conn, user.id) do %>
         <span><%= link "Edit", to: Routes.user_path(@conn, :edit, user), class: "btn btn-info" %></span>
-        <span><%= link "X", to: Routes.user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
+        <span><%= link "X", to: Routes.user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>        <% end %>
+
       </td>
     </tr>
 <% end %>

@@ -48,6 +48,11 @@ defmodule EventsApp.Events do
     |> Repo.preload(:user)
   end
 
+  # https://github.com/NatTuck/scratch-2021-01/blob/master/notes-4550/13-access-rules/notes.md#branch-06-comments
+  def load_comments(%Event{} = event) do
+    Repo.preload(event, [comments: :user])
+  end
+
   @doc """
   Creates a event.
 

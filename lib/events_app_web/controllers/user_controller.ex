@@ -4,6 +4,37 @@ defmodule EventsAppWeb.UserController do
   alias EventsApp.Users
   alias EventsApp.Users.User
   alias EventsApp.Photos
+  alias EventsAppWeb.Plugs
+
+  plug Plugs.RequireUser when action in [:edit, :update]
+
+  plug :fetch_user when action in [
+    :show, :photo, :edit, :update, :delete]
+  plug :require_owner when action in [
+    :edit, :update, :delete]
+
+
+  def fetch_user(conn, _args) do
+    id = conn.params["id"]
+    user = Users.get_user!(id)
+    assign(conn, :user, user)
+  end
+
+  def require_owner(conn, _args) do
+    # Precondition: We have these in conn
+    current_user = conn.assigns[:current_user]
+    user = conn.assigns[:user]
+
+    if user.id == current_user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "That isn't yours.")
+      |> redirect(to: Routes.user_path(conn, :index))
+      |> halt()
+    end
+  end
+
 
   def index(conn, _params) do
     users = Users.list_users()
