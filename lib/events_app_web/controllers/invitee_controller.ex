@@ -6,6 +6,7 @@ defmodule EventsAppWeb.InviteeController do
   alias EventsApp.Events
   alias EventsApp.Users
   alias EventsApp.Users.User
+  alias EventsApp.Photos
 
   def index(conn, _params) do
     invitees = Invitees.list_invitees()
@@ -45,6 +46,10 @@ defmodule EventsAppWeb.InviteeController do
       user
     else
       newUserAttr = %{email: email, name: "no_name"}
+
+      def_hash = Photos.load_default
+      newUserAttr
+      |> Map.put("profile_photo", def_hash)
 
       case Users.create_user(newUserAttr) do
         {:ok, user} -> user
