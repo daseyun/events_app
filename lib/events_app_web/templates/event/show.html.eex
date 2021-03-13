@@ -99,9 +99,11 @@
 <%= for comm <- @event.comments do %>
   <div class="card">
     <div class="card-body">
+    <%= if @event.user.profile_photo != nil do %>
       <div>
         <img  width="100" height="100" src="<%= Routes.user_path(@conn, :photo, comm.user_id) %>" alt="">
       </div>
+      <% end %>
       <p>Posted by: <%= comm.user.name %>(<%= comm.user.email %>)</p>
       <p class="card-text"><%= comm.body %></p>
       <%= if current_user_id(@conn) == @event.user_id or current_user_id(@conn) == comm.user_id do %>

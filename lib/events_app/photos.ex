@@ -2,6 +2,15 @@
 #  https://github.com/NatTuck/scratch-2021-01/blob/master/notes-4550/12-uploads/notes.md#branch-04-photo-uploads
 defmodule EventsApp.Photos do
 
+
+
+  # grab the default picture for users that don't upload.
+  def load_default do
+    photo = Application.app_dir(:events_app, "priv/photos")
+    path = Path.join(photo, "noProfile.png")
+    {:ok, hash} = save_photo("noProfile.png", path)
+    hash
+  end
   # wrapper
   # check if photo was inserted.
   # if so, save.

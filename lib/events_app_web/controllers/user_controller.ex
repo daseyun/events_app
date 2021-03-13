@@ -43,16 +43,26 @@ defmodule EventsAppWeb.UserController do
 
   def new(conn, _params) do
     changeset = Users.change_user(%User{})
+    IO.inspect([:NEW, changeset])
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
+    IO.inspect([:CREATE, user_params])
     user_photo = user_params["photo"]
     {:ok, hash} = Photos.save_photo(user_photo)
 
-    user_params =
+    user_params = if hash != nil do
       user_params
       |> Map.put("profile_photo", hash)
+    else
+      def_hash = Photos.load_default
+      user_params
+      |> Map.put("profile_photo", def_hash)
+    end
+
+
+
 
     IO.inspect([:userPhoto, user_params])
 
@@ -78,10 +88,12 @@ defmodule EventsAppWeb.UserController do
   def edit(conn, %{"id" => id}) do
     user = Users.get_user!(id)
     changeset = Users.change_user(user)
+    IO.inspect([:EDIT, user, changeset])
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
+    IO.inspect([:UPDATEUSER1, user_params])
     user = Users.get_user!(id)
     user_photo = user_params["profile_photo"]
 
@@ -93,6 +105,7 @@ defmodule EventsAppWeb.UserController do
         user_params
       end
 
+    IO.inspect([:UPDATEUSER2, user_params])
     case Users.update_user(user, user_params) do
       {:ok, user} ->
         conn

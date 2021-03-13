@@ -16,7 +16,9 @@
           <li class="nav-item nav-link">
             <%= link "Events", to: Routes.event_path(@conn, :index) %>
           </li>
-
+          <li class="nav-item nav-link">
+            <%= link "Users", to: Routes.user_path(@conn, :index) %>
+          </li>
         </ul>
         <ul class="navbar-nav ml-auto">
           <%= if @conn.assigns[:current_user] do %>

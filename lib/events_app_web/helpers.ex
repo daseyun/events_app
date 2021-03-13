@@ -23,7 +23,7 @@ defmodule EventsAppWeb.Helpers do
   def user_is_invited?(conn, event) do
     user = conn.assigns[:current_user]
 
-    IO.inspect([:xxx, event])
+    # IO.inspect([:xxx, event])
     cond do
       user == nil ->
         false

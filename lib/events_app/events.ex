@@ -21,7 +21,6 @@ defmodule EventsApp.Events do
     a = Repo.all(Event)
     |> Repo.preload(:user)
     |> Repo.preload(:invitees)
-    IO.inspect([:a, a])
     a
   end
 
