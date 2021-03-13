@@ -59,12 +59,12 @@ defmodule EventsAppWeb.UserController do
     case Users.create_user(user_params) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
+        |> put_flash(:info, "User created successfully. Try logging in above!")
         |> redirect(to: Routes.user_path(conn, :show, user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
-        |> put_flash(:info, "Unable to create account. Email may be registered already.")
+        |> put_flash(:error, "Unable to create account. Possible reasons: invalid form, email in use.")
         # |> render(conn, "new.html", changeset: changeset)
         |> redirect(to: Routes.user_path(conn, :new))
     end
@@ -97,7 +97,7 @@ defmodule EventsAppWeb.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
+        |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
@@ -116,7 +116,6 @@ defmodule EventsAppWeb.UserController do
   def photo(conn, %{"id" => id}) do
     # user = conn.assigns[:user]
     user = Users.get_user!(id)
-    IO.inspect([:PHOTO, user])
 
     if user.profile_photo do
       {:ok, _name, data} = Photos.load_photo(user.profile_photo)

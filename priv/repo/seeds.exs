@@ -26,10 +26,11 @@ defmodule Inject do
 end
 
 
-default_photo = Inject.photo("default.png")
+alice_photo = Inject.photo("default1.png")
+bob_photo = Inject.photo("default.png")
 
-alice = Repo.insert!(%User{name: "alice", email: "alice@mail.com", profile_photo: default_photo})
-bob = Repo.insert!(%User{name: "bob", email: "bob@mail.com", profile_photo: default_photo})
+alice = Repo.insert!(%User{name: "alice", email: "alice@mail.com", profile_photo: alice_photo})
+bob = Repo.insert!(%User{name: "bob", email: "bob@mail.com", profile_photo: bob_photo})
 
 p1 = Repo.insert!(%Event{
   event_name: "Alice's event",

@@ -9,13 +9,12 @@
 <%= hidden_input f, :event_status %>
 
 <div class="form-group">
-  <%= label f, :user_email %>
-  <%= email_input f, :user_email, class: "form-control" %>
-  <%= error_tag f, :user_email %>
+  <%= label f, :event_status %>
+  <%=  select f, :event_status, ["no_response": "no_response", "yes": "yes", "maybe": "maybe", "no": "no" ], class: "form-control"%>
+  <%= error_tag f, :event_status %>
 </div>
 
-
 <div>
-  <%= submit "Invite",  class: "btn btn-primary" %>
+  <%= submit "Update Status",  class: "btn btn-primary" %>
 </div>
 <% end %>

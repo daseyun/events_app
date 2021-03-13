@@ -63,6 +63,7 @@ defmodule EventsApp.Users do
     # IO.inspect(:xxxxxxxxxx)
     # userExists? = get_user_by_email(attrs["email"])
     # IO.inspect([:createuser, userExists?])
+    IO.inspect([:CREATEUSER, attrs])
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()

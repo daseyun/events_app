@@ -4,6 +4,8 @@ defmodule EventsAppWeb.InviteeController do
   alias EventsApp.Invitees
   alias EventsApp.Invitees.Invitee
   alias EventsApp.Events
+  alias EventsApp.Users
+  alias EventsApp.Users.User
 
   def index(conn, _params) do
     invitees = Invitees.list_invitees()
@@ -17,7 +19,7 @@ defmodule EventsAppWeb.InviteeController do
   # end
 
   def new(conn, %{"param" => event_id}) do
-    {event_id, _ } = Integer.parse(event_id)
+    {event_id, _} = Integer.parse(event_id)
 
     changeset = Invitees.change_invitee(%Invitee{event_id: event_id, event_status: "no_response"})
     # event = Events.get_event!(event_id)
@@ -36,28 +38,56 @@ defmodule EventsAppWeb.InviteeController do
     render(conn, "new.html", changeset: changeset)
   end
 
+  def findOrCreateUser(email) do
+    user = Users.get_user_by_email(email)
+
+    if user != nil do
+      user
+    else
+      newUserAttr = %{email: email, name: "no_name"}
+
+      case Users.create_user(newUserAttr) do
+        {:ok, user} -> user
+        {:error, _} -> nil
+      end
+    end
+  end
+
   def create(conn, %{"invitee" => invitee_params}) do
     IO.inspect([:create, invitee_params])
+    event_id_str = invitee_params["event_id"]
+    {event_id, _} = Integer.parse(event_id_str)
+
+    # find or get user using email
+    invited_user = findOrCreateUser(invitee_params["user_email"])
+    invitee_params = %{"event_status" => "no_response", "event_id" => event_id, "user_id" => invited_user.id}
+
+    IO.inspect([:create2, invitee_params])
+
+    current_event = Events.get_event!(event_id)
     # manipulate invitee_params
     case Invitees.create_invitee(invitee_params) do
-      {:ok, invitee} ->
+      {:ok, _} ->
+        event_url = EventsAppWeb.Endpoint.url() <> "/events/" <> event_id_str
+        success_msg = "Invitee created successfully. Share this link: " <> event_url
         conn
-        |> put_flash(:info, "Invitee created successfully.")
-        |> redirect(to: Routes.invitee_path(conn, :show, invitee))
+        |> put_flash(:info, success_msg)
+        |> redirect(to: Routes.event_path(conn, :show, current_event))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:error, "Unable to inivte. Possible reasons: already invited, invalid email.")
+        |> redirect(to: Routes.event_path(conn, :show, current_event))
     end
   end
 
   def show(conn, %{"id" => id}) do
+    IO.inspect([:asd, "####(!*(@@!*((*"])
     invitee = Invitees.get_invitee!(id)
     render(conn, "show.html", invitee: invitee)
   end
 
   def edit(conn, %{"id" => id}) do
-
-
     invitee = Invitees.get_invitee!(id)
     changeset = Invitees.change_invitee(invitee)
     IO.inspect([:edit, invitee, changeset])
@@ -66,12 +96,13 @@ defmodule EventsAppWeb.InviteeController do
 
   def update(conn, %{"id" => id, "invitee" => invitee_params}) do
     invitee = Invitees.get_invitee!(id)
-
+    IO.inspect([:update, invitee, invitee_params])
+    event = Events.get_event!(invitee.event_id)
     case Invitees.update_invitee(invitee, invitee_params) do
       {:ok, invitee} ->
         conn
         |> put_flash(:info, "Invitee updated successfully.")
-        |> redirect(to: Routes.invitee_path(conn, :show, invitee))
+        |> redirect(to: Routes.event_path(conn, :show, event))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", invitee: invitee, changeset: changeset)

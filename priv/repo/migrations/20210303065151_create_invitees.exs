@@ -11,6 +11,8 @@ defmodule EventsApp.Repo.Migrations.CreateInvitees do
     end
 
     create index(:invitees, [:event_id])
-    create index(:invitees, [:user_id])
+    # create index(:invitees, [:user_id])
+
+    create unique_index(:invitees, [:user_id])
   end
 end

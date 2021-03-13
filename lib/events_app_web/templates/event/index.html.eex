@@ -14,6 +14,7 @@
   <tbody>
 
 <%= for event <- @events do %>
+  <%= if user_is_invited?(@conn, event) do%>
     <tr>
       <td><%= event.event_name %></td>
       <td><%= event.date %></td>
@@ -26,8 +27,18 @@
         <span><%= link "X", to: Routes.event_path(@conn, :delete, event), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %></span>
       </td>
     </tr>
+  <% end %>
 <% end %>
   </tbody>
 </table>
 
+
+
 <span><%= link "New Event", to: Routes.event_path(@conn, :new), class: 'btn btn-primary' %></span>
+
+<br />
+<hr />
+
+<div>
+  You may only see events you own or are invited to.
+</div>

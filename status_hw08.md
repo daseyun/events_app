@@ -1,15 +1,16 @@
 
-Web Dev Spring 2021 HW07 Status
+Web Dev Spring 2021 HW08 Status
 
 Answer the following questions:
 
 
 1. What's your name?
-Seokju Yun
+Seokju Yun 
 
 
 2. What's the URL of the github repo with your work for this HW?
 https://github.com/daseyun/events_app
+
 
 3. What's the URL that you deployed to?
 http://events.danyun.me/
@@ -20,12 +21,9 @@ Yes.
 
 
 5. Is your app properly deployed? If not, what went wrong?
-Yes. N/A
+Yes.
 
 
-6. If you would like the deployment for an old homework to be reconsidered, what
-are the links to your Inkfish submission and deployed site?
-N/A
 
 
 And here's a list of tasks for grading comments. Just leave this here:

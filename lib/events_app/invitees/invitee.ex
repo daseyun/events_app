@@ -18,5 +18,6 @@ defmodule EventsApp.Invitees.Invitee do
     invitee
     |> cast(attrs, [:event_status, :event_id, :user_id])
     |> validate_required([:event_status, :event_id, :user_id])
+    |> unique_constraint(:user_id)
   end
 end

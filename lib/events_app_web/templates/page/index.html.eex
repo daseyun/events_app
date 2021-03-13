@@ -14,6 +14,10 @@
 </br>
 <div class="row">
   <%= for event <- @events do %>
+
+    <%= if user_is_invited?(@conn, event) do%>
+
+
     <div class="col-sm-4 card">
 
       <div class="card-body">
@@ -27,5 +31,14 @@
             ) %>
       </div>
     </div>
+     <% end %>
   <% end %>
+</div>
+
+<br />
+<hr />
+<div>
+
+  You may only see events you own or are invited to.
+
 </div>

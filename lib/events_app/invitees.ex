@@ -59,6 +59,19 @@ defmodule EventsApp.Invitees do
     |> Repo.insert()
   end
 
+  def get_invitee(user_id, event_id) do
+    # Repo.get_by(Invitee, [user_id: user_id, event_id: event_id])
+
+    Invitee
+    |> where(user_id: ^user_id)
+    |> where(event_id: ^event_id)
+    |> Repo.one
+  end
+
+  def load_event(x) do
+    Repo.preload(x, :event)
+  end
+
   @doc """
   Updates a invitee.
 

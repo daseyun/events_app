@@ -6,10 +6,18 @@ defmodule EventsAppWeb.SessionController do
     # TODO: test this
     user = EventsApp.Users.get_user_by_email(email)
     if user do
-      conn
-      |> put_session(:user_id, user.id)
-      |> put_flash(:info, "Welcome back #{user.name}")
-      |> redirect(to: Routes.page_path(conn, :index))
+      if user.name == "no_name" do
+        conn
+        |> put_session(:user_id, user.id)
+        |> put_flash(:info, "Please complete your profile and revisit the provided link!")
+        |> redirect(to: Routes.user_path(conn, :edit, user))
+      else
+        conn
+        |> put_session(:user_id, user.id)
+        |> put_flash(:info, "Welcome back #{user.name}")
+        |> redirect(to: Routes.page_path(conn, :index))
+      end
+
     else
       conn
       |> put_flash(:error, "Login failed.")

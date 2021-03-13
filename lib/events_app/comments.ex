@@ -37,6 +37,15 @@ defmodule EventsApp.Comments do
   """
   def get_comment!(id), do: Repo.get!(Comment, id)
 
+  # get comment that matches user_id and event_id if exists
+  def get_comment(user_id, event_id) do
+    IO.inspect([:GET_COMMENT, user_id, event_id])
+    Comment
+    |> where(user_id: ^user_id)
+    |> where(event_id: ^event_id)
+    |> Repo.one
+
+  end
   @doc """
   Creates a comment.
 
