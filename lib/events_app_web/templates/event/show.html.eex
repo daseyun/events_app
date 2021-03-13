@@ -2,9 +2,12 @@
 <%= if current_user_is?(@conn, @event.user_id) do %>
    <span><%= link "Edit Event", to: Routes.event_path(@conn, :edit, @event) %></span>
 <% end %>
+<%= if @event.user.profile_photo != nil do %>
+
 <div>
   <img  width="100" height="100" src="<%= Routes.user_path(@conn, :photo, @event.user) %>" alt="">
 </div>
+<% end %>
 <ul>
   <li>
     <strong>Event name:</strong>
@@ -26,6 +29,7 @@
 <br />
 <hr />
 
+<%= if @current_user_invite != nil do  %>
 <h2>Select Status</h2>
 
  <%= render(
@@ -37,6 +41,7 @@
 
 <hr/>
 
+<% end %>
 
 <h2>Invitees Status</h2>
 

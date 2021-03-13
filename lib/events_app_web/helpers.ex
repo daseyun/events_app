@@ -28,6 +28,8 @@ defmodule EventsAppWeb.Helpers do
       user == nil ->
         false
 
+      user.id == event.user_id -> true
+
       true ->
         user_invited =
           Enum.any?(event.invitees, fn x ->

@@ -66,11 +66,14 @@ defmodule EventsAppWeb.EventController do
     user_loggedin? = user != nil
 
     cond do
+
       user_loggedin? == false ->
         conn
         |> put_flash(:error, "Please Log In or Register.")
         |> redirect(to: Routes.user_path(conn, :new, params: event.id))
         |> halt()
+
+      user.id == event.user_id -> conn
 
       user_loggedin? == true ->
         user_invited =
@@ -141,9 +144,13 @@ defmodule EventsAppWeb.EventController do
 
     new_invitee = EventsApp.Invitees.change_invitee(inv)
     current_user_invite = Invitees.get_invitee(user.id, event.id)
-    current_invite_change = Invitees.change_invitee(current_user_invite)
 
-    IO.inspect([:ioqwino, event])
+    current_invite_change = if current_user_invite do
+      Invitees.change_invitee(current_user_invite)
+    else
+      Invitees.change_invitee(inv)
+    end
+
     inv_status_numbers = countEventStatusNumbers(event.invitees)
 
     # event = Events.get_event!(id)
